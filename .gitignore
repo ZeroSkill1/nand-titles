@@ -26,5 +26,10 @@ country_list/romfs/*
 eula/romfs/*
 mii/romfs/*
 shared_font/romfs/*
-shared_font/code_sheet*
+shared_font/tmp_pngs/code_sheet*
 .zed/*
+
+*.bcfnt
+*.bcfnt.lz
+*.cfa
+shared_font/repack/*

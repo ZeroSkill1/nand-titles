@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46667"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="E011.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.63758695"
+     inkscape:cx="-45.483992"
+     inkscape:cy="-161.54659"
+     inkscape:window-width="1175"
+     inkscape:window-height="1052"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showgrid="false">
+    <inkscape:grid
+       id="grid6"
+       units="mm"
+       originx="0"
+       originy="0"
+       spacingx="0.99999995"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <rect
+       x="161.81329"
+       y="185.60937"
+       width="295.0713"
+       height="244.07972"
+       id="rect3" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="rect15"
+       style="opacity:1">
+      <path
+         style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:13.6;paint-order:markers stroke fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="m 16.898437,14.818359 a 2.4952446,2.4952446 0 0 0 -2.49414,2.496094 V 118.98242 a 2.4952446,2.4952446 0 0 0 2.49414,2.4961 H 118.56836 a 2.4952446,2.4952446 0 0 0 2.49414,-2.4961 V 17.314453 a 2.4952446,2.4952446 0 0 0 -2.49414,-2.496094 z m 2.496094,4.990235 H 116.07227 V 116.48828 H 19.394531 Z"
+         id="path4" />
+      <path
+         style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:13.6;paint-order:markers stroke fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="M 16.898762,17.313738 H 118.56791 V 118.98288 H 16.898762 Z"
+         id="path5" />
+    </g>
+    <g
+       id="rect16-0"
+       style="opacity:1">
+      <path
+         style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;fill:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:13.6;paint-order:markers stroke fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="m 65.326172,99.951172 a 4.0203619,4.0203619 0 0 0 -4.019531,4.019528 v 5.08594 a 4.0203619,4.0203619 0 0 0 4.019531,4.02149 h 4.814453 a 4.0203619,4.0203619 0 0 0 4.019531,-4.02149 v -5.08594 a 4.0203619,4.0203619 0 0 0 -4.019531,-4.019528 z"
+         id="path1" />
+    </g>
+    <g
+       id="path3"
+       style="opacity:1">
+      <path
+         style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;fill:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:13.6;paint-order:markers stroke fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="m 28.023437,24.652344 a 4.020402,4.020402 0 0 0 -4.021484,4.019531 v 5.28125 a 4.020402,4.020402 0 0 0 4.021484,4.021484 h 68.896485 v 20.56836 H 65.472656 a 4.020402,4.020402 0 0 0 -4.021484,4.021484 v 28.314453 a 4.020402,4.020402 0 0 0 4.021484,4.021485 h 4.720703 a 4.020402,4.020402 0 0 0 4.019532,-4.017579 l 0.0098,-19.017578 h 31.853514 a 4.020402,4.020402 0 0 0 4.01953,-4.019531 V 28.671875 a 4.020402,4.020402 0 0 0 -4.01953,-4.019531 z"
+         id="path6" />
+    </g>
+  </g>
+</svg>

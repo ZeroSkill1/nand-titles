@@ -123,7 +123,7 @@ MAPPING_METHODS = {
     MAPPING_SCAN: 'Scan'
 }
 
-TGLP_DATA_OFFSET = 0x2000
+TGLP_DATA_OFFSET = 0x80
 
 
 class Bffnt:
@@ -187,7 +187,7 @@ class Bffnt:
 
         # convert pixels to RGBA8
         position = self.tglp['sheetOffset']
-        self._parse_tglp_data(data)
+        self._parse_tglp_data(data, position)
 
     def load(self, json_filename):
         json_data = json.load(open(json_filename, 'r'))
@@ -223,6 +223,8 @@ class Bffnt:
                 'format': sheet_pixel_format
             }
         }
+        
+        print(self.tglp)
 
         widths = json_data['glyphWidths']
         cwdh = {
@@ -265,71 +267,9 @@ class Bffnt:
 
     def _int_sort(self, x):
         return int(x, 10)
-
-    def extract(self):
-        basename_ = os.path.splitext(os.path.basename(self.filename))[0]
-
-        glyph_widths = {}
-        for cwdh in self.cwdh_sections:
-            for index in range(cwdh['start'], cwdh['end'] + 1):
-                glyph_widths[index] = cwdh['data'][index - cwdh['start']]
-
-        glyph_mapping = {}
-        for cmap in self.cmap_sections:
-            if cmap['type'] == MAPPING_DIRECT:
-                for code in range(cmap['start'], cmap['end']):
-                    glyph_mapping[chr(code)] = code - cmap['start'] + cmap['indexOffset']
-            elif cmap['type'] == MAPPING_TABLE:
-                for code in range(cmap['start'], cmap['end']):
-                    index = cmap['indexTable'][code - cmap['start']]
-                    if index != 0xFFFF:
-                        glyph_mapping[chr(code)] = index
-            elif cmap['type'] == MAPPING_SCAN:
-                for code in cmap['entries'].keys():
-                    glyph_mapping[code] = cmap['entries'][code]
-
-        # save JSON manifest
-        json_file_ = open('%s_manifest.json' % basename_, 'w')
-        json_file_.write(json.dumps({
-            'fontInfo': self.font_info,
-            'textureInfo': {
-                'glyph': self.tglp['glyph'],
-                'sheetCount': self.tglp['sheetCount'],
-                'sheetInfo': {
-                    'cols': self.tglp['sheet']['cols'],
-                    'rows': self.tglp['sheet']['rows'],
-                    'width': self.tglp['sheet']['width'],
-                    'height': self.tglp['sheet']['height'],
-                    'colorFormat': PIXEL_FORMATS[self.tglp['sheet']['format']]
-                }
-            },
-            'glyphWidths': glyph_widths,
-            'glyphMap': glyph_mapping
-        }, indent=2, sort_keys=True))
-        json_file_.close()
-
-        # save sheet bitmaps
-        for i in range(self.tglp['sheetCount']):
-            sheet = self.tglp['sheets'][i]
-            width = sheet['width']
-            height = sheet['height']
-            png_data = []
-            for y in range(height):
-                row = []
-                for x in range(width):
-                    for color in sheet['data'][x + (y * width)]:
-                        row.append(color)
-
-                png_data.append(row)
-
-            file_ = open('%s_sheet%d.png' % (basename_, i), 'wb')
-            writer = png.Writer(width, height, alpha=True)
-            writer.write(file_, png_data)
-            file_.close()
-
+        
     def save(self, filename):
         file_ = open(filename, 'wb')
-        basename_ = os.path.splitext(os.path.basename(filename))[0]
         section_count = 0
 
         bom = 0
@@ -386,7 +326,7 @@ class Bffnt:
         section_count += 1
 
         for idx in range(tglp['sheetCount']):
-            sheet_filename = '%s_sheet%d.png' % (basename_, idx)
+            sheet_filename = 'code_sheet%d.png' % idx
             sheet_file_ = open(sheet_filename, 'rb')
 
             reader = png.Reader(file=sheet_file_)
@@ -639,8 +579,7 @@ class Bffnt:
             print('TGLP Sheet Height: %d' % sheet_height)
             print('TGLP Sheet Data Offset: 0x%08x\n' % sheet_data_offset)
 
-    def _parse_tglp_data(self, data):
-        position = 0
+    def _parse_tglp_data(self, data, position):
         self.tglp['sheets'] = []
         format_ = self.tglp['sheet']['format']
         for i in range(self.tglp['sheetCount']):
@@ -1142,40 +1081,15 @@ if __name__ == '__main__':
                        action='store_true', default=False)
     group.add_argument('-b', '--big-endian', help='Use big endian encoding in the created BFFNT file',
                        action='store_true', default=False)
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-c', '--create', help='create BFFNT file from extracted files', action='store_true',
-                       default=False)
-    group.add_argument('-x', '--extract', help='extract BFFNT into PNG/JSON files', action='store_true', default=False)
     parser.add_argument('-f', '--file', metavar='bffnt', help='BFFNT file', required=True)
+    parser.add_argument('-m', '--manifest', help='Font manifest file', required=True)
     args = parser.parse_args()
-
-    if args.extract and not os.path.exists(args.file):
-        print('Could not find BFFNT file:')
-        print(args.file)
+    
+    if not os.path.exists(args.manifest):
+        print('Invalid manifest path or manifest does not exist')
         sys.exit(1)
 
-    basename = os.path.splitext(os.path.basename(args.file))[0]
-    json_file = '%s_manifest.json' % basename
-
-    if args.extract and os.path.exists(json_file) and not args.yes:
-        print('JSON output file exists.')
-        answer = prompt_yes_no('Overwrite? (y/N) ')
-
-        if answer == 'n':
-            print('Aborted')
-            sys.exit(1)
-
-    sheet_file = '%s_sheet0.png' % basename
-
-    if args.extract and os.path.exists(sheet_file) and not args.yes:
-        print('At least one sheet PNG file exists.')
-        answer = prompt_yes_no('Overwrite? (y/N) ')
-
-        if answer == 'n':
-            print('Aborted')
-            sys.exit(1)
-
-    if args.create and os.path.exists(args.file) and not args.yes:
+    if os.path.exists(args.file) and not args.yes:
         print('BFFNT output file exists.')
         answer = prompt_yes_no('Overwrite? (y/N) ')
 
@@ -1189,11 +1103,6 @@ if __name__ == '__main__':
         order = '<'
     bffnt = Bffnt(load_order=order)
 
-    if args.extract:
-        bffnt.read(args.file)
-        if not bffnt.invalid:
-            bffnt.extract()
-    elif args.create:
-        bffnt.load(json_file)
-        if not bffnt.invalid:
-            bffnt.save(args.file)
+    bffnt.load(args.manifest)
+    if not bffnt.invalid:
+        bffnt.save(args.file)
